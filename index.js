@@ -86,11 +86,19 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
-    // console.log(req.data);
-    res.status(200).json(tweets)
+    res.status(200).json(latestTweets(tweets));
 });
 
 function searchAvatar(username){
     const user = users.find(user => user.username === username);
     return user.avatar;
+}
+
+function latestTweets(tweets){
+    const tweetsReverse = [...tweets].reverse();
+    const latestTen = [];
+    for(let i = 0; (i < 10 && i < tweetsReverse.length); i++){
+        latestTen.push(tweetsReverse[i]);
+    }
+    return latestTen;
 }
